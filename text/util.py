@@ -99,7 +99,7 @@ class DocumentBodyGenerator:
 				fin.close()
 				if len(body) < self.min_doc_length:
 					continue
-				yield (doc_id,body)
+				yield (filepath,body)
 
 
 class DocumentTokenGenerator:

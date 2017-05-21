@@ -44,4 +44,14 @@ def main():
 # --------------------------------------------------------------
 
 if __name__ == "__main__":
+
+	# Execute from within python repl:
+	#
+	# import sys
+	# sys.argv = ['display-topics.py','-l', 'out/news/20news-bydate-train_windowtopics_k16.pkl']
+	# execfile('display-topics.py')
+	# 
+	# (doc_ids, terms, term_rankings, partition, W, H, labels) = unsupervised.nmf.load_nmf_results( sys.argv[2])
+	# files_for_topic = [doc_ids[doc] for doc, topic in enumerate(partition) if topic == 3]
+	#
 	main()

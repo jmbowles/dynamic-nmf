@@ -60,4 +60,19 @@ def main():
 # --------------------------------------------------------------
 
 if __name__ == "__main__":
+
+	# Execute from within python repl:
+	#
+	# import sys
+	# sys.argv = ['prep-text.py', 'datasets/20news-bydate-train', '-o', 'out/news', '--tfidf', '--norm', '--ngram', '2']
+	# execfile('prep-text.py')
+	#
+	# Execute from CLI:
+	#
+	# python prep-text.py datasets/20news-bydate-train -o out/news --tfidf --norm --ngram 2
+	# python prep-word2vec.py datasets/20news-bydate-train -o out/news -m sg
+	# python find-window-topics.py out/news/*.pkl -k 15,20 -o out/news -m out/news/w2v-model.bin -w out/news/selected.csv
+	# python display-topics.py -l out/news/20news-bydate-train_windowtopics_k16.pkl
+	# python export-csv.py out/news/20news-bydate-train_windowtopics_k16.pkl -t 50
+
 	main()
