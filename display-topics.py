@@ -53,5 +53,7 @@ if __name__ == "__main__":
 	# 
 	# (doc_ids, terms, term_rankings, partition, W, H, labels) = unsupervised.nmf.load_nmf_results( sys.argv[2])
 	# files_for_topic = [doc_ids[doc] for doc, topic in enumerate(partition) if topic == 3]
+	# top_15_terms_for_first_topic = term_rankings[0][0:15]
+	# label_for_first_topic = labels[0]
 	#
 	main()
