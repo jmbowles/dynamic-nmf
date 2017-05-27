@@ -46,16 +46,16 @@ def main():
 		for doc_id, body in docgen:
 			docs.append(body)	
 			doc_ids.append(doc_id)	
-		log.info( "Found %d documents to parse" % len(docs) )
+	log.info( "Found %d documents to parse" % len(docs) )
 
-		# Pre-process the documents
-		log.info( "Pre-processing documents (%d stopwords, tfidf=%s, normalize=%s, min_df=%d, max_ngram=%d) ..." % (len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df, options.max_ngram ) )
-		(X,terms) = text.util.preprocess( docs, stopwords, min_df = options.min_df, apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm, ngram_range = (1,options.max_ngram) )
-		log.info( "Created %dx%d document-term matrix" % X.shape )
+	# Pre-process the documents
+	log.info( "Pre-processing documents (%d stopwords, tfidf=%s, normalize=%s, min_df=%d, max_ngram=%d) ..." % (len(stopwords), options.apply_tfidf, options.apply_norm, options.min_df, options.max_ngram ) )
+	(X,terms) = text.util.preprocess( docs, stopwords, min_df = options.min_df, apply_tfidf = options.apply_tfidf, apply_norm = options.apply_norm, ngram_range = (1,options.max_ngram) )
+	log.info( "Created %dx%d document-term matrix" % X.shape )
 
-		# Save the pre-processed documents
-		out_prefix = os.path.join( dir_out, dir_name )
-		text.util.save_corpus( out_prefix, X, terms, doc_ids )
+	# Save the pre-processed documents
+	out_prefix = os.path.join( dir_out, dir_name )
+	text.util.save_corpus( out_prefix, X, terms, doc_ids )
 
 # --------------------------------------------------------------
 
