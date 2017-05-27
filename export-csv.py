@@ -66,4 +66,17 @@ def main():
 # --------------------------------------------------------------
 
 if __name__ == "__main__":
+
+	# Execute from within python repl:
+	#
+	# import sys
+	# sys.argv = ['export-csv.py','out/news/20news-bydate-train_windowtopics_k16.pkl', '-o', 'out/news', '-t', '50']
+	# execfile('export-csv.py')
+	#
+	# (doc_ids, terms, term_rankings, partition, W, H, labels) = unsupervised.nmf.load_nmf_results( sys.argv[1])
+	#
+	# Execute from CLI:
+	#
+	# python export-csv.py out/news/20news-bydate-train_windowtopics_k16.pkl -o out/news -t 50
+	#
 	main()
