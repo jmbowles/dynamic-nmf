@@ -46,9 +46,9 @@ def main():
 	# Build the Word2Vec model from the documents that we have found
 	log.info( "Building Word2vec %s model..." % options.model_type )
 	if options.model_type == "cbow":
-		model = gensim.models.Word2Vec(docgen, size=options.dimensions, min_count=options.min_df, window=options.w2v_window, workers=4, sg = 0)
+		model = gensim.models.Word2Vec(docgen, size=options.dimensions, min_count=options.min_df, window=options.w2v_window, workers=4, sg = 3)
 	elif options.model_type == "sg":
-		model = gensim.models.Word2Vec(docgen, size=options.dimensions, min_count=options.min_df, window=options.w2v_window, workers=4, sg = 1)
+		model = gensim.models.Word2Vec(docgen, size=options.dimensions, min_count=options.min_df, window=options.w2v_window, workers=4, sg = 3)
 	else:
 		log.error("Unknown model type '%s'" % options.model_type )
 		sys.exit(1)
@@ -62,4 +62,13 @@ def main():
 # --------------------------------------------------------------
 
 if __name__ == "__main__":
+	# Execute from within python repl:
+	#
+	# import sys
+	# sys.argv = ['prep-word2vec.py', 'datasets/20news-bydate-train', 'datasets/20news-bydate-test', '-o', 'out/news', '-m', 'sg']
+	# execfile('prep-word2vec.py')
+	#
+	# Execute from CLI:
+	#
+	# python prep-word2vec.py datasets/20news-bydate-train -o out/news -m sg
 	main()

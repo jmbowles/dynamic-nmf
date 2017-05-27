@@ -36,13 +36,15 @@ def main():
 		log.info( "Using custom stopwords from %s" % options.stoplist_file )
 		stopwords = text.util.load_stopwords( options.stoplist_file )
 
+	docs = []
+	doc_ids = []
+
 	# Process each directory
 	for in_path in args:
 		dir_name = os.path.basename( in_path )
 		# Read content of all documents in the directory
 		docgen = text.util.DocumentBodyGenerator( [in_path], options.min_doc_length )
-		docs = []
-		doc_ids = []
+		
 		for doc_id, body in docgen:
 			docs.append(body)	
 			doc_ids.append(doc_id)	
@@ -54,7 +56,7 @@ def main():
 	log.info( "Created %dx%d document-term matrix" % X.shape )
 
 	# Save the pre-processed documents
-	out_prefix = os.path.join( dir_out, dir_name )
+	out_prefix = os.path.join( dir_out, 'topic' )
 	text.util.save_corpus( out_prefix, X, terms, doc_ids )
 
 # --------------------------------------------------------------
