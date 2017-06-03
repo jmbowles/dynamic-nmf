@@ -87,6 +87,8 @@ def main():
 		# Generate window topic model for the specified range of numbers of topics
 		log.info( "Generating models in range [%d,%d] ..." % ( actual_kmin, actual_kmax ) )
 		coherence_scores = {}
+		top_k_results = {}
+
 		for k in range(actual_kmin,actual_kmax+1):
 			log.info( "Applying window topic modeling to matrix for k=%d topics ..." % k )
 			try:
@@ -116,9 +118,9 @@ def main():
 				truncated_term_rankings = unsupervised.rankings.truncate_term_rankings( term_rankings, options.top )
 				coherence_scores[k] = validation_measure.evaluate_rankings( truncated_term_rankings )
 				log.info("Model coherence (k=%d) = %.4f" % (k,coherence_scores[k]) )
-			# Write results
+			# Set the results keyed by topic
 			results_out_path = os.path.join( dir_out, "%s_windowtopics_k%02d.pkl"  % (window_name, k) )
-			unsupervised.nmf.save_nmf_results( results_out_path, doc_ids, terms, term_rankings, partition, impl.W, impl.H, topic_labels )
+			top_k_results[k] = (results_out_path, doc_ids, terms, term_rankings, partition, impl.W, impl.H, topic_labels)
 
 		# Need to select best value of k?
 		if len(coherence_scores) > 0:
@@ -127,6 +129,8 @@ def main():
 			top_k = [ p[0] for p in sx ][0:min(3,len(sx))]
 			log.info("- Top recommendations for number of topics for '%s': %s" % (window_name,",".join(map(str, top_k))) )
 			selected_ks.append( [matrix_filepath, top_k[0]] )
+			results_out_path, doc_ids, terms, term_rankings, partition, W, H, topic_labels = top_k_results[top_k[0]]
+			unsupervised.nmf.save_nmf_results(results_out_path, doc_ids, terms, term_rankings, partition, W, H, topic_labels)
 
 	if not options.path_selected_ks is None:
 		log.info("Writing selected numbers of topics for %d window datasets to %s" % ( len(selected_ks), options.path_selected_ks ) )
@@ -139,5 +143,11 @@ def main():
 # --------------------------------------------------------------
 
 if __name__ == "__main__":
+	# Execute from within python repl:
+	#
+	# import sys
+	# sys.argv = ['find-window-topics.py', 'out/news_windows/topic.pkl', '-k', '15,25', '-o', 'out/news_windows', '-m', 'out/news_windows/w2v-model.bin', '-w', 'out/news_windows/selected.csv']
+	# execfile('find-window-topics.py')
+	#
 	main()
  
